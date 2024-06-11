@@ -1,0 +1,11 @@
+name: APIM
+summary: This is an APIM deployment using Bicep.
+description: Deploys an APIM.
+templatePath: main.bicep
+parameters:
+- id: "name"
+  name: "name"
+  description: "Name of the Apim"
+  type: "string"
+  required: true
+runner: Bicep
