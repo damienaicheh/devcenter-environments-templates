@@ -8,27 +8,4 @@ parameters:
   description: 'Name of the Apim'
   type: string
   required: true
-
-- id: sku
-  name: Sku
-  description: 'The APIM Sku'
-  type: string
-  allowed:
-    - 'Consumption'
-    - 'Developer'
-    - 'Basic'
-    - 'Basicv2'
-    - 'Standard'
-    - 'Standardv2'
-  default: 'Consumption'
-
-- id: skuCount
-  name: SkuCount
-  description: 'The APIM Sku Count'
-  type: string
-  allowed:
-    - 0
-    - 1
-    - 2
-  default: 0  
 runner: Bicep
