@@ -1,6 +1,6 @@
 name: APIM
 summary: This is an APIM deployment using Bicep.
-description: Deploys an APIM. The Sku Count should be 0 in Consumption Sku.
+description: Deploys an APIM using the Consumption Sku.
 templatePath: main.bicep
 parameters:
 - id: name
