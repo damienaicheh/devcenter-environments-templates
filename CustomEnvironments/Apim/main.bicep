@@ -1,32 +1,39 @@
-name: APIM
-summary: This is an APIM deployment using Bicep.
-description: Deploys an APIM.
-templatePath: main.bicep
-parameters:
-- id: "name"
-  name: "Name"
-  description: "Name of the Apim"
-  type: "string"
-  required: true
-- id: sku
-  name: Sku
-  description: "The APIM Sku"
-  type: string
-  allowed:
-    - 'Consumption'
-    - 'Developer'
-    - 'Basic'
-    - 'Basicv2'
-    - 'Standard'
-    - 'Standardv2'
-  default: 'Consumption'
-- id: skuCount
-  name: SkuCount
-  description: "The APIM Sku Count (Should be 0 in Consumption Sku)"
-  type: string
-  allowed:
-    - 0
-    - 1
-    - 2
-  default: 0  
-runner: Bicep
+@description('The name of the API Management service instance')
+param name string = ''
+
+var resourceName = !empty(name) ? replace(name, ' ', '-') : 'apim${uniqueString(resourceGroup().id)}'
+
+@description('The pricing tier of this API Management service')
+@allowed([
+  'Consumption'
+  'Developer'
+  'Basic'
+  'Basicv2'
+  'Standard'
+  'Standardv2'
+])
+param sku string = ''
+
+@description('The instance size of this API Management service.')
+@allowed([
+  0
+  1
+  2
+])
+param skuCount int
+
+@description('Location for all resources.')
+param location string = resourceGroup().location
+
+resource apiManagementService 'Microsoft.ApiManagement/service@2023-05-01-preview' = {
+  name: resourceName
+  location: location
+  sku: {
+    name: sku
+    capacity: skuCount
+  }
+  properties: {
+    publisherEmail: 'company@company.me'
+    publisherName: 'Company'
+  }
+}
